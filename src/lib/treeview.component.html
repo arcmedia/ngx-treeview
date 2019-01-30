@@ -45,6 +45,7 @@
 <div [ngSwitch]="hasFilterItems">
   <div *ngSwitchCase="true" class="treeview-container" [style.max-height.px]="maxHeight">
     <ngx-treeview-item *ngFor="let item of filterItems" [config]="config" [item]="item" [template]="itemTemplate || defaultItemTemplate"
+      (itemChange)="onItemChange($event)"
       (checkedChange)="onItemCheckedChange(item, $event)">
     </ngx-treeview-item>
   </div>

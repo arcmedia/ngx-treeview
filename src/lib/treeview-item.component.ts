@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, Output, TemplateRef } from '@angular/core';
-import { isNil } from 'lodash';
-import { TreeviewItem } from './treeview-item';
-import { TreeviewConfig } from './treeview-config';
-import { TreeviewItemTemplateContext } from './treeview-item-template-context';
+import {Component, EventEmitter, Input, Output, TemplateRef} from '@angular/core';
+import {isNil} from 'lodash';
+import {TreeviewItem} from './treeview-item';
+import {TreeviewConfig} from './treeview-config';
+import {TreeviewItemTemplateContext} from './treeview-item-template-context';
 
 @Component({
     selector: 'ngx-treeview-item',
@@ -14,6 +14,7 @@ export class TreeviewItemComponent {
     @Input() template: TemplateRef<TreeviewItemTemplateContext>;
     @Input() item: TreeviewItem;
     @Output() checkedChange = new EventEmitter<boolean>();
+    @Output() itemChange = new EventEmitter<TreeviewItem>();
 
     constructor(
         private defaultConfig: TreeviewConfig
@@ -30,6 +31,7 @@ export class TreeviewItemComponent {
         if (!isNil(this.item.children) && !this.config.decoupleChildFromParent) {
             this.item.children.forEach(child => child.setCheckedRecursive(checked));
         }
+        this.itemChange.emit(this.item);
         this.checkedChange.emit(checked);
     }
 
@@ -54,7 +56,14 @@ export class TreeviewItemComponent {
             }
 
         }
-
         this.checkedChange.emit(checked);
+    }
+
+    onItemChange(item: TreeviewItem) {
+        this.itemChange.emit(item);
+    }
+
+    visibility(item?: TreeviewItem) {
+        return item && this.config.showIfUnchecked ? true : item.getVisibility();
     }
 }

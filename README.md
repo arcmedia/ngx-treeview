@@ -124,23 +124,9 @@ To map your JSON objects to TreeItem objects.
     ]
 });
 ```
-
-You can pass the second paramater 'autoCorrectChecked' with value=true (default is false) in constructor of TreeviewItem to correct checked value of it and all of its descendants. In some cases, you need to push or pop children flexibly, checked of parent may be not correct. Then you need to call function correctChecked() to help to correct from root to its descendants.
- ```js
-const vegetableCategory = new TreeviewItem({
-    text: 'Vegetable', value: 2, children: [
-        { text: 'Salad', value: 21 },
-        { text: 'Potato', value: 22 }
-    ]
-});
-vegetableCategory.children.push(new TreeviewItem({ text: 'Mushroom', value: 23, checked: false }));
-vegetableCategory.correctChecked(); // need this to make 'Vegetable' node to change checked value from true to false
- ```
-
 #### TreeviewEventParser:
 Extract data from list of checked TreeviewItem and send it in parameter of event selectedChange. Some built-in TreeviewEventParser:
 * DefaultTreeviewEventParser: return values of checked items.
-* DownlineTreeviewEventParser: return list of checked items in orginal order with their ancestors.
 * OrderDownlineTreeviewEventParser: return list of checked items in checked order with their ancestors. Note that: value of a leaf must be different from value of other leaves.
 
 #### Templating:

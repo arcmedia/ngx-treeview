@@ -6,6 +6,7 @@ export class TreeviewConfig {
     hasFilter = false;
     hasCollapseExpand = false;
     decoupleChildFromParent = false;
+    showIfUnchecked = true;
     maxHeight = 500;
 
     get hasDivider(): boolean {
@@ -17,6 +18,7 @@ export class TreeviewConfig {
         hasFilter?: boolean,
         hasCollapseExpand?: boolean,
         decoupleChildFromParent?: boolean
+        showIfUnchecked?: boolean
         maxHeight?: number,
     }): TreeviewConfig {
         const config = new TreeviewConfig();

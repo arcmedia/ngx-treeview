@@ -102,13 +102,13 @@ describe('removeParent', () => {
         const parent = root;
         let item = root.children[1];
         expect(parent.children.length).toBe(2);
-        expect(parent.checked).toBe(undefined);
+        expect(parent.checked).toBe(false);
         expect(TreeviewHelper.removeItem(parent, item)).toBe(true);
         expect(parent.children.length).toBe(1);
-        expect(parent.checked).toBe(true);
+        expect(parent.checked).toBe(false);
 
         item = root.children[0];
         expect(TreeviewHelper.removeItem(parent, item)).toBe(true);
-        expect(parent.children).toBeUndefined();
+        expect(parent.children.length).toBe(0);
     });
 });

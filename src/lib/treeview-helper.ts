@@ -1,12 +1,13 @@
-import { concat, isNil, pull } from 'lodash';
-import { TreeviewItem } from './treeview-item';
+import {concat, isNil, pull} from 'lodash';
+import {TreeviewItem} from './treeview-item';
 
 export const TreeviewHelper = {
     findItem: findItem,
     findItemInList: findItemInList,
     findParent: findParent,
     removeItem: removeItem,
-    concatSelection: concatSelection
+    concatSelection: concatSelection,
+    appendChildren: appendChildren,
 };
 
 function findItem(root: TreeviewItem, value: any): TreeviewItem {
@@ -68,11 +69,6 @@ function removeItem(root: TreeviewItem, item: TreeviewItem): boolean {
     const parent = findParent(root, item);
     if (parent) {
         pull(parent.children, item);
-        if (parent.children.length === 0) {
-            parent.children = undefined;
-        } else {
-            parent.correctChecked();
-        }
         return true;
     }
 
@@ -91,4 +87,18 @@ function concatSelection(items: TreeviewItem[], checked: TreeviewItem[], uncheck
         checked: checkedItems,
         unchecked: uncheckedItems
     };
+}
+
+/**
+ * This method receives an array of TreeviewItems a TreeviewItem and the value, that is the parent id of the TreeviewItem, so it gets
+ * appended to the tree.
+ */
+function appendChildren(list: TreeviewItem[], item: TreeviewItem, value: any): void {
+    if (item !== null) {
+        const parent = TreeviewHelper.findItemInList(list, value);
+        const exist = TreeviewHelper.findItem(parent, item.value);
+        if (!(exist instanceof TreeviewItem)) {
+            parent.appendChildren(item);
+        }
+    }
 }

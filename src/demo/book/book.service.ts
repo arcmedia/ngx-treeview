@@ -1,47 +1,63 @@
-import { Injectable } from '@angular/core';
-import { TreeviewItem } from '../../lib';
+import {Injectable} from '@angular/core';
+import {TreeviewItem} from '../../lib';
 
 export class BookService {
     getBooks(): TreeviewItem[] {
-        const childrenCategory = new TreeviewItem({
-            text: 'Children', value: 1, collapsed: true, children: [
-                { text: 'Baby 3-5', value: 11 },
-                { text: 'Baby 6-8', value: 12 },
-                { text: 'Baby 9-12', value: 13 }
-            ]
-        });
-        const itCategory = new TreeviewItem({
-            text: 'IT', value: 9, children: [
+        const arcmediaDW = {
+            value: '572876a1-c271-4426-99f2-8694b78ee8f3',
+            text: 'ArcMedia',
+            checked: true,
+            children: [
                 {
-                    text: 'Programming', value: 91, children: [{
-                        text: 'Frontend', value: 911, children: [
-                            { text: 'Angular 1', value: 9111 },
-                            { text: 'Angular 2', value: 9112 },
-                            { text: 'ReactJS', value: 9113, disabled: true }
-                        ]
-                    }, {
-                        text: 'Backend', value: 912, children: [
-                            { text: 'C#', value: 9121 },
-                            { text: 'Java', value: 9122 },
-                            { text: 'Python', value: 9123, checked: false, disabled: true }
-                        ]
-                    }]
+                    value: '3b64ed52-021d-4dc5-959c-02b29b031114',
+                    text: 'PHP',
+                    checked: false,
+                    children: [
+                        {
+                            value: '09c46f6b-c18a-4ab8-a953-9fb2fb866521',
+                            text: 'Symfony',
+                            checked: true,
+                            children: [
+                                {
+                                    value: '1ce85af1-1678-4b22-8fe2-b8aa416f7369',
+                                    text: 'Events',
+                                    checked: true,
+                                    children: []
+                                }]
+                        },
+                        {
+                            value: '840ce963-e22d-4aea-b323-ab8bfbe01a3e',
+                            text: 'Service container',
+                            checked: true,
+                            children: []
+                        }]
                 },
                 {
-                    text: 'Networking', value: 92, children: [
-                        { text: 'Internet', value: 921 },
-                        { text: 'Security', value: 922 }
+                    value: '7447c52a-a016-4996-b834-3b44bf2ced3c',
+                    text: 'NET',
+                    checked: false,
+                    children: []
+                },
+                {
+                    value: 'afc8f73d-fda4-4306-bf0d-7c018cc9818a',
+                    text: 'Angular',
+                    checked: false,
+                    children: [
+                        {
+                            value: 'bc300b23-7e70-4ab9-95a2-2d966ff1f4db',
+                            text: 'Components',
+                            checked: false,
+                            children: []
+                        }, {
+                            value: 'ac5dc452-4d6a-4144-9f2d-6056963bff03',
+                            text: 'Directives',
+                            checked: false,
+                            children: []
+                        }
                     ]
                 }
             ]
-        });
-        const teenCategory = new TreeviewItem({
-            text: 'Teen', value: 2, collapsed: true, disabled: true, children: [
-                { text: 'Adventure', value: 21 },
-                { text: 'Science', value: 22 }
-            ]
-        });
-        const othersCategory = new TreeviewItem({ text: 'Others', value: 3, checked: false, disabled: true });
-        return [childrenCategory, itCategory, teenCategory, othersCategory];
+        };
+        return [new TreeviewItem(arcmediaDW)];
     }
 }

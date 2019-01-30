@@ -1,6 +1,6 @@
 {
-  "name": "ngx-treeview",
-  "version": "6.0.2",
+  "name": "arcm-ngx-treeview",
+  "version": "6.1.1",
   "license": "MIT",
   "description": "An Angular treeview component with checkbox",
   "scripts": {
@@ -32,7 +32,7 @@
   "author": "Leo Vo <leovo2708@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/leovo2708/ngx-treeview.git"
+    "url": "git+https://github.com/arcmedia-it/ngx-treeview"
   },
   "bugs": {
     "url": "https://github.com/leovo2708/ngx-treeview/issues"
@@ -79,8 +79,10 @@
     "karma": "~3.0.0",
     "karma-chrome-launcher": "~2.2.0",
     "karma-coverage-istanbul-reporter": "~2.0.1",
+    "karma-firefox-launcher": "^1.1.0",
     "karma-jasmine": "~1.1.2",
     "karma-jasmine-html-reporter": "^0.2.2",
+    "karma-junit-reporter": "^1.2.0",
     "lodash": "^4.17.10",
     "node-sass": "^4.9.3",
     "protractor": "^5.4.0",

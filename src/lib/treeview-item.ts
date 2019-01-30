@@ -1,5 +1,5 @@
-import { isBoolean, isNil, isString } from 'lodash';
-import { TreeviewHelper } from './treeview-helper';
+import {isBoolean, isNil, isString} from 'lodash';
+import {TreeviewHelper} from './treeview-helper';
 
 export interface TreeviewSelection {
     checkedItems: TreeviewItem[];
@@ -13,17 +13,19 @@ export interface TreeItem {
     checked?: boolean;
     collapsed?: boolean;
     children?: TreeItem[];
+    parent?: TreeItem;
 }
 
 export class TreeviewItem {
     private internalDisabled = false;
     private internalChecked = true;
     private internalCollapsed = false;
-    private internalChildren: TreeviewItem[];
+    private internalChildren: TreeviewItem[] = [];
+    parent: TreeviewItem;
     text: string;
     value: any;
 
-    constructor(item: TreeItem, autoCorrectChecked = false) {
+    constructor(item: TreeItem, autoCorrectChecked = false, parent?: TreeviewItem) {
         if (isNil(item)) {
             throw new Error('Item must be defined');
         }
@@ -48,12 +50,12 @@ export class TreeviewItem {
                     child.disabled = true;
                 }
 
-                return new TreeviewItem(child);
+                return new TreeviewItem(child, autoCorrectChecked, this);
             });
         }
 
-        if (autoCorrectChecked) {
-            this.correctChecked();
+        if (parent) {
+            this.parent = parent;
         }
     }
 
@@ -82,9 +84,24 @@ export class TreeviewItem {
         }
     }
 
+    /**
+     * This method returns the visibility depending if the item is not disabled and is checked
+     */
+    getVisibility() {
+        return this.checked && this.disabled === false;
+    }
+
     get disabled(): boolean {
+        this.internalDisabled = false;
+        if (this.parent instanceof TreeviewItem
+            && (undefined === this.parent.checked ||
+                false === this.parent.checked ||
+                true === this.parent.disabled)) {
+            this.internalDisabled = true;
+        }
         return this.internalDisabled;
     }
+
 
     set disabled(value: boolean) {
         if (this.internalDisabled !== value) {
@@ -134,15 +151,23 @@ export class TreeviewItem {
                         }
                     }
                 });
-                this.internalChecked = checked;
+                if (undefined !== checked) {
+                    // todo: review this! why the parent should change depending on the children state for the checked property?
+                    // this.internalChecked = checked;
+                }
             }
         }
+    }
+
+    appendChildren(item: TreeviewItem) {
+        item.parent = this;
+        this.children.push(item);
     }
 
     getSelection(): TreeviewSelection {
         let checkedItems: TreeviewItem[] = [];
         let uncheckedItems: TreeviewItem[] = [];
-        if (isNil(this.internalChildren)) {
+        if (this.internalChildren.length <= 0) {
             if (this.internalChecked) {
                 checkedItems.push(this);
             } else {
@@ -158,28 +183,5 @@ export class TreeviewItem {
             checkedItems: checkedItems,
             uncheckedItems: uncheckedItems
         };
-    }
-
-    correctChecked() {
-        this.internalChecked = this.getCorrectChecked();
-    }
-
-    private getCorrectChecked(): boolean {
-        let checked: boolean = null;
-        if (!isNil(this.internalChildren)) {
-            for (const child of this.internalChildren) {
-                child.internalChecked = child.getCorrectChecked();
-                if (checked === null) {
-                    checked = child.internalChecked;
-                } else if (checked !== child.internalChecked) {
-                    checked = undefined;
-                    break;
-                }
-            }
-        } else {
-            checked = this.checked;
-        }
-
-        return checked;
     }
 }
