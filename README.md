@@ -1,4 +1,5 @@
-# ngx-treeview
+[![CircleCI](https://circleci.com/gh/arcmedia/ngx-treeview.svg?style=svg)](https://circleci.com/gh/arcmedia/ngx-treeview)
+# arcm-ngx-treeview
 
 An Angular treeview component with checkbox
 
@@ -21,11 +22,6 @@ You can customize CSS yourself to break down dependencies to Bootstrap & Font Aw
 * Internationalization (i18n) support
 * Template
 * Checkbox with tri-state
-
-## Demo
-
-[https://leovo2708.github.io/ngx-treeview/](https://leovo2708.github.io/ngx-treeview/)
-([Source code](https://github.com/leovo2708/ngx-treeview/tree/master/src/demo))
 
 ## Installation
 
