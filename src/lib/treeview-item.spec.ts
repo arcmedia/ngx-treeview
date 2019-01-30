@@ -23,44 +23,13 @@ describe('TreeviewItem', () => {
 
     it('should allow to create TreeviewItem with empty children', () => {
         const treeviewItem = new TreeviewItem({ text: 'Parent', value: 1, children: [] });
-        expect(treeviewItem.children).toBeUndefined();
+        expect(treeviewItem.children.length).toBe(0);
     });
 
     describe('checked', () => {
         it('should have value is true by default', () => {
             const treeviewItem = new TreeviewItem({ text: 'Parent', value: 1 });
             expect(treeviewItem.checked).toBeTruthy();
-        });
-
-        it('should correct checked value when input second param', () => {
-            const treeviewItem = new TreeviewItem({
-                text: 'Parent',
-                value: 1,
-                checked: false,
-                children: [
-                    { text: 'Child 1', value: 11, checked: true }
-                ]
-            }, true);
-            expect(treeviewItem.checked).toBe(true);
-        });
-
-        it('should set checked value correctly when invoke correctChecked', () => {
-            const treeviewItem = new TreeviewItem({
-                text: 'Parent',
-                value: 1,
-                checked: false,
-                children: [
-                    { text: 'Child 1', value: 11, checked: true }
-                ]
-            });
-            expect(treeviewItem.checked).toBe(true);
-            treeviewItem.children.push(new TreeviewItem({
-                text: 'Child 2',
-                value: 12,
-                checked: false
-            }));
-            treeviewItem.correctChecked();
-            expect(treeviewItem.checked).toBe(undefined);
         });
 
         it('should not change checked value if item is disabled', () => {
@@ -144,32 +113,6 @@ describe('TreeviewItem', () => {
             expect(treeviewItem.disabled).toBeFalsy();
         });
 
-        it('should initialize children are disabled if initializing parent is disabled', () => {
-            const treeviewItem = new TreeviewItem({
-                text: 'Parent',
-                value: 1,
-                disabled: true,
-                children: [
-                    { text: 'Child', value: 11, disabled: false }
-                ]
-            });
-            expect(treeviewItem.children[0].disabled).toBeTruthy();
-        });
-
-        it('should change disabled value of children to false if changing disabled of parent to false', () => {
-            const treeviewItem = new TreeviewItem({
-                text: 'Parent',
-                value: 1,
-                children: [
-                    { text: 'Child 1', value: 11 }
-                ]
-            });
-            expect(treeviewItem.children[0].disabled).toBe(false);
-            treeviewItem.disabled = true;
-            expect(treeviewItem.children[0].disabled).toBe(true);
-            treeviewItem.disabled = true;
-            expect(treeviewItem.children[0].disabled).toBe(true);
-        });
     });
 
     describe('children', () => {
@@ -184,7 +127,7 @@ describe('TreeviewItem', () => {
             const children: TreeviewItem[] = [
                 new TreeviewItem({ text: 'Child 1', value: 11 })
             ];
-            expect(treeviewItem.children).toBeUndefined();
+            expect(treeviewItem.children.length).toBe(0);
             treeviewItem.children = children;
             expect(treeviewItem.children).toBe(children);
             treeviewItem.children = children;
@@ -236,5 +179,6 @@ describe('TreeviewItem', () => {
                 expect(selection.uncheckedItems).toEqual([childItem22]);
             });
         });
+
     });
 });

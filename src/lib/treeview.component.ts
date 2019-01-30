@@ -8,8 +8,10 @@ import { TreeviewHeaderTemplateContext } from './treeview-header-template-contex
 import { TreeviewItemTemplateContext } from './treeview-item-template-context';
 import { TreeviewHelper } from './treeview-helper';
 
+
 class FilterTreeviewItem extends TreeviewItem {
     private readonly refItem: TreeviewItem;
+
     constructor(item: TreeviewItem) {
         super({
             text: item.text,
@@ -54,6 +56,7 @@ export class TreeviewComponent implements OnChanges {
     @Input() config: TreeviewConfig;
     @Output() selectedChange = new EventEmitter<any[]>();
     @Output() filterChange = new EventEmitter<string>();
+    @Output() itemChange = new EventEmitter<TreeviewItem>();
     headerTemplateContext: TreeviewHeaderTemplateContext;
     allItem: TreeviewItem;
     filterText = '';
@@ -117,9 +120,12 @@ export class TreeviewComponent implements OnChanges {
         if (item instanceof FilterTreeviewItem) {
             item.updateRefChecked();
         }
-
         this.updateCheckedOfAll();
         this.raiseSelectedChange();
+    }
+
+    onItemChange(item: TreeviewItem) {
+        this.itemChange.emit(item);
     }
 
     raiseSelectedChange() {
