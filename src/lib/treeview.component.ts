@@ -1,12 +1,12 @@
-import { Component, Input, Output, EventEmitter, SimpleChanges, OnChanges, TemplateRef } from '@angular/core';
-import { isNil, includes } from 'lodash';
-import { TreeviewI18n } from './treeview-i18n';
-import { TreeviewItem, TreeviewSelection } from './treeview-item';
-import { TreeviewConfig } from './treeview-config';
-import { TreeviewEventParser } from './treeview-event-parser';
-import { TreeviewHeaderTemplateContext } from './treeview-header-template-context';
-import { TreeviewItemTemplateContext } from './treeview-item-template-context';
-import { TreeviewHelper } from './treeview-helper';
+import {Component, Input, Output, EventEmitter, SimpleChanges, OnChanges, TemplateRef} from '@angular/core';
+import {isNil, includes} from 'lodash';
+import {TreeviewI18n} from './treeview-i18n';
+import {TreeviewItem, TreeviewSelection} from './treeview-item';
+import {TreeviewConfig} from './treeview-config';
+import {TreeviewEventParser} from './treeview-event-parser';
+import {TreeviewHeaderTemplateContext} from './treeview-header-template-context';
+import {TreeviewItemTemplateContext} from './treeview-item-template-context';
+import {TreeviewHelper} from './treeview-helper';
 
 
 class FilterTreeviewItem extends TreeviewItem {
@@ -69,7 +69,7 @@ export class TreeviewComponent implements OnChanges {
         private eventParser: TreeviewEventParser
     ) {
         this.config = this.defaultConfig;
-        this.allItem = new TreeviewItem({ text: 'All', value: undefined });
+        this.allItem = new TreeviewItem({text: 'All', value: undefined});
         this.createHeaderTemplateContext();
     }
 
@@ -88,6 +88,10 @@ export class TreeviewComponent implements OnChanges {
                 this.updateFilterItems();
                 this.updateCollapsedOfAll();
                 this.raiseSelectedChange();
+            }
+            if (this.config.collapsed === true) {
+                this.allItem.collapsed = true;
+                this.filterItems.forEach(item => item.setCollapsedRecursive(true));
             }
         }
         this.createHeaderTemplateContext();
